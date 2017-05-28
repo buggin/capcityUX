@@ -1,4 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
+const {autoInit: mdcAutoInit} = require('node_modules/material-components-web/dist/material-components-web.js');
 
 @Component({
   selector: 'my-app',
@@ -34,7 +35,7 @@ export class AppComponent implements AfterViewInit {
 	}
 	ngAfterViewInit(): void {
     //do something  
-   	mdc.autoInit();
+   	mdcAutoInit();
   }
 }
 export class Product {
