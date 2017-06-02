@@ -1,13 +1,14 @@
 import { Component, AfterViewInit } from '@angular/core';
-const {tabs: mdcTabs} = require('node_modules/material-components-web/dist/material-components-web.js');
+import { Router, NavigationEnd } from '@angular/router';
+const mdcTabs = require('@material/tabs');
 
 @Component({
 	selector: 'my-app',
 	template: `
 		<h1 class="mdc-typography--display1">{{title}}</h1>
-		<nav id="basic-tab-bar" class="mdc-tab-bar">
-  		<a class="mdc-tab mdc-tab--active" routerLink="/products">Products</a>
-  		<a class="mdc-tab " >Dashboard</a>
+		<nav id="dinamyc-tab-bar" class="mdc-tab-bar mdc-tab-bar--indicator-accent">
+  		<a class="mdc-tab" routerLink="/products" routerLinkActive="mdc-tab--active">Products</a>
+  		<a class="mdc-tab" routerLink="/dashboard" routerLinkActive="mdc-tab--active">Dashboard</a>
  			<span class="mdc-tab-bar__indicator"></span>
 		</nav>
    	<router-outlet></router-outlet>
@@ -15,7 +16,15 @@ const {tabs: mdcTabs} = require('node_modules/material-components-web/dist/mater
 })
 export class AppComponent implements AfterViewInit {
 	title = "NGA Products";
+	constructor(private router:Router) {}
+
 	ngAfterViewInit(): void{
-		mdcTabs.MDCTabBar.attachTo(document.querySelector('#basic-tab-bar'));
+		this.router.events.subscribe(function(event){
+		  if (event instanceof NavigationEnd) {
+	    	//start the tabs bar only the first time
+	    	const tabBar = new mdcTabs.MDCTabBar(document.querySelector('#dinamyc-tab-bar'));
+	    	this.unsubscribe();
+		  }
+		});
 	}
 }

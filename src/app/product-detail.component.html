@@ -1,0 +1,15 @@
+<div #detailsCont *ngIf="product">
+  <h2>{{product.name}} details!</h2>
+  <div>
+    <label>id: </label>{{product.id}}</div>
+  <div class="mdc-textfield mdc-textfield--upgraded" data-mdc-auto-init="MDCTextfield">
+    <input [(ngModel)]="product.name" type="text" class="mdc-textfield__input" id="demo-input" />
+    <label for="demo-input" class="mdc-textfield__label mdc-textfield__label--float-above">name: </label>
+  </div>
+  <div class="mdc-textfield mdc-textfield--upgraded" data-mdc-auto-init="MDCTextfield">
+  	<input [(ngModel)]="product.description" type="text" class="mdc-textfield__input" id="description" />
+    <label for="description" class="mdc-textfield__label mdc-textfield__label--float-above">description: </label>
+  </div>
+  <button class="mdc-button mdc-button--accent" data-mdc-auto-init="MDCRipple" (click)="save()">Save</button>
+  <button class="mdc-button mdc-button--accent" data-mdc-auto-init="MDCRipple" (click)="goBack()">Back</button>
+</div>

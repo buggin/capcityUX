@@ -1,0 +1,12 @@
+<h3>Top Products</h3>
+<div class="mdc-grid-list">
+  <ul class="mdc-grid-list__tiles">
+    <a *ngFor="let product of products" [routerLink]="['/detail', product.id]" class="mdc-grid-tile">
+      <div class="mdc-grid-tile__primary nga-bg"></div>
+      <span class="mdc-grid-tile__secondary">
+        <span class="mdc-grid-tile__title">{{product.description}}</span>
+      </span>
+    </a>
+  </ul>
+</div>
+<product-search></product-search>

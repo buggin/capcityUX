@@ -22,6 +22,10 @@
       '@angular/http': 'npm:@angular/http/bundles/http.umd.js',
       '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
       '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
+      '@material/tabs': 'npm:@material/tabs/dist/mdc.tabs.js',
+      '@material/textfield': 'npm:@material/textfield/dist/mdc.textfield.js',
+      '@material/ripple': 'npm:@material/ripple/dist/mdc.ripple.js',
+      '@material/auto-init': 'npm:@material/auto-init/dist/mdc.autoInit.js',
 
       // other libraries
       'rxjs':                      'npm:rxjs',

@@ -1,0 +1,18 @@
+<div id="search-component">
+  <h4>Hero Search</h4>
+  <div class="mdc-textfield mdc-textfield--upgraded" data-mdc-auto-init="MDCTextfield">
+  	<input #searchBox type="text" class="mdc-textfield__input" id="searchBox" (keyup)="search(searchBox.value)" />
+    <label for="searchBox" class="mdc-textfield__label mdc-textfield__label--float-above">Search: </label>
+  </div>
+  <div class="mdc-grid-list">
+  	<ul class="mdc-list mdc-list--avatar-list">
+	    <li *ngFor="let product of products | async" class="mdc-list-item" data-mdc-auto-init="MDCRipple" id="product{{product.id}}"
+	         (click)="gotoDetail(product)">
+	      <span class="mdc-list-item__start-detail mdc-theme--primary-bg"></span>
+	     	<div class="mdc-list-item">{{product.name}}</div>
+	    </li>
+	  </ul>
+  </div>
+</div>
+    
+  

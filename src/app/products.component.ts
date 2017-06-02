@@ -1,44 +1,72 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Product } from './product';
 import { ProductService } from './product.service'
-const {autoInit: mdcAutoInit} = require('node_modules/material-components-web/dist/material-components-web.js');
+import { Router } from '@angular/router';
+const mdcTextField = require('@material/textfield');
+const mdcRipple = require('@material/ripple');
+const mdcAutoInit = require('@material/auto-init')
 
 @Component({
   selector: 'my-products',
-  template: `
-	<h2 class="mdc-typography--display2">My products</h2>
-	<div class="mdc-grid-list">
-	  <ul class="mdc-list mdc-list--avatar-list">
-	    <li *ngFor="let product of products" class="mdc-list-item" (click)="onSelect(product)">
-	    	<span class="mdc-list-item__start-detail nga-bg"></span>
-	     	<div class="mdc-list-item" data-mdc-auto-init="MDCRipple">{{product.name}}</div>
-	    </li>
-	  </ul>
-	</div>
-	<product-detail *ngIf="selectedProduct" [product]="selectedProduct"></product-detail>
-  `
+  templateUrl: './products.component.html'
 })
-export class ProductsComponent implements OnInit, AfterViewInit {
+export class ProductsComponent implements OnInit, OnDestroy {
 	products: Product[];
 	selectedProduct: Product;
-	constructor(private productService: ProductService) { }
+	constructor(
+		private productService: ProductService,
+		private router:Router
+	) { }
 	
 	onSelect(product: Product): void {
   	this.selectedProduct = product;
+  	setTimeout(() => mdcRipple.MDCRipple.attachTo(document.querySelector('.mdc-button')), 0);
 	}
 
-	getHeroes(): void {
+	getProducts(): void {
    	this.productService.getProducts().then(
-   		products => {this.products = products}
+   		products => {
+   			this.products = products;
+   			setTimeout(() => this.animateList(), 0);
+   		}
    	);
   }
 
-  ngOnInit(): void {
-  	this.getHeroes();
+  add(name: string, desc: string): void {
+    name = name.trim();
+    if (!name || !desc) { return; }
+    this.productService.create(name, desc)
+      .then(product => {
+        this.products.push(product);
+        this.selectedProduct = null;
+        setTimeout(() => mdcRipple.MDCRipple.attachTo(document.querySelector(`#product${product.id}`)), 0);
+      });
   }
 
-  ngAfterViewInit(): void {
-  	mdcAutoInit();
+  delete(product: Product): void {
+    this.productService
+        .delete(product.id)
+        .then(() => {
+          this.products = this.products.filter(p => p !== product);
+          if (this.selectedProduct === product) { this.selectedProduct = null; }
+        });
+  }
+
+  animateList(){
+    mdcAutoInit.default.register('MDCTextfield', mdcTextField.MDCTextfield);
+  	mdcAutoInit.default.register('MDCRipple', mdcRipple.MDCRipple);
+  	mdcAutoInit.default();
+  }
+
+  gotoDetail(): void{
+  	this.router.navigate(['/detail', this.selectedProduct.id]);
+  }
+  
+  ngOnInit(): void {
+  	this.getProducts();
+  }
+  ngOnDestroy(){
+  	mdcAutoInit.default.deregisterAll()
   }
 }
 

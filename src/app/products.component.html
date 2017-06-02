@@ -1,0 +1,31 @@
+<h2 class="mdc-typography--display2">My products</h2>
+<div>
+  <div class="mdc-textfield mdc-textfield--upgraded" data-mdc-auto-init="MDCTextfield">
+    <input #productName type="text" class="mdc-textfield__input" id="productName" />
+    <label for="productName" class="mdc-textfield__label mdc-textfield__label--float-above">Name: </label>
+  </div>
+  <div class="mdc-textfield mdc-textfield--upgraded" data-mdc-auto-init="MDCTextfield">
+    <input #productDesc type="text" class="mdc-textfield__input" id="productDesc" />
+    <label for="productDesc" class="mdc-textfield__label mdc-textfield__label--float-above">Description: </label>
+  </div>
+  <button class="mdc-button mdc-button--accent" data-mdc-auto-init="MDCRipple" (click)="add(productName.value, productDesc.value); productName.value=''; productDesc.value=''">
+    Add
+  </button>
+</div>
+<div class="mdc-grid-list">
+  <ul class="mdc-list mdc-list--avatar-list">
+    <li *ngFor="let product of products" class="mdc-list-item" data-mdc-auto-init="MDCRipple" id="product{{product.id}}" (click)="onSelect(product)">
+    	<span class="mdc-list-item__start-detail mdc-theme--primary-bg"></span>
+     	<div class="mdc-list-item">{{product.name}}</div>
+      <button class="mdc-button mdc-button--raised" data-mdc-auto-init="MDCRipple" (click)="delete(product); $event.stopPropagation()">
+        Delete
+      </button>
+    </li>
+  </ul>
+</div>
+<div *ngIf="selectedProduct">
+	<h2>
+  	{{selectedProduct.name | uppercase}} is my Product
+  </h2>
+  <button class="mdc-button mdc-button--accent" (click)="gotoDetail()">View Details</button>
+</div>
