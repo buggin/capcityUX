@@ -5,11 +5,10 @@ import { HttpModule }    from '@angular/http';
 import { AppRoutingModule} from './app-routing.module'
 
 import { AppComponent }  from './app.component';
-import { ProductService } from './product.service'
-import { DashboardComponent } from './dashboard.component';
-import { ProductsComponent } from './products.component';
-import { ProductDetailComponent } from './product-detail.component';
-import { ProductSearchComponent } from './product-search.component';
+import { ProductService } from './products/product.service'
+import { ProductsComponent } from './products/products.component';
+import { ProductDetailComponent } from './products/product-detail.component';
+import { ProductSearchComponent } from './products/product-search.component';
 
 
 @NgModule({
@@ -19,7 +18,7 @@ import { ProductSearchComponent } from './product-search.component';
   	HttpModule,
   	AppRoutingModule
   ],
-  declarations:	[ AppComponent, ProductDetailComponent, ProductsComponent, DashboardComponent, ProductSearchComponent ],
+  declarations:	[ AppComponent, ProductDetailComponent, ProductsComponent, ProductSearchComponent ],
   bootstrap:	[ AppComponent ],
   providers: [ProductService]
 })

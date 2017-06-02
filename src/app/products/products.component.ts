@@ -12,17 +12,11 @@ const mdcAutoInit = require('@material/auto-init')
 })
 export class ProductsComponent implements OnInit, OnDestroy {
 	products: Product[];
-	selectedProduct: Product;
 	constructor(
 		private productService: ProductService,
 		private router:Router
 	) { }
 	
-	onSelect(product: Product): void {
-  	this.selectedProduct = product;
-  	setTimeout(() => mdcRipple.MDCRipple.attachTo(document.querySelector('.mdc-button')), 0);
-	}
-
 	getProducts(): void {
    	this.productService.getProducts().then(
    		products => {
@@ -38,8 +32,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.productService.create(name, desc)
       .then(product => {
         this.products.push(product);
-        this.selectedProduct = null;
-        setTimeout(() => mdcRipple.MDCRipple.attachTo(document.querySelector(`#product${product.id}`)), 0);
       });
   }
 
@@ -48,7 +40,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
         .delete(product.id)
         .then(() => {
           this.products = this.products.filter(p => p !== product);
-          if (this.selectedProduct === product) { this.selectedProduct = null; }
         });
   }
 
@@ -58,8 +49,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
   	mdcAutoInit.default();
   }
 
-  gotoDetail(): void{
-  	this.router.navigate(['/detail', this.selectedProduct.id]);
+  gotoDetail(product: Product): void{
+  	this.router.navigate(['/detail', product.id]);
   }
   
   ngOnInit(): void {

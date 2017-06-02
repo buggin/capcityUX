@@ -1,0 +1,27 @@
+<div class="mdc-layout-grid">
+  <div class="mdc-typography--headline mdc-layout-grid__cell mdc-layout-grid__cell--span-12">Add a new Product</div>
+  <div class="mdc-textfield mdc-textfield--upgraded mdc-layout-grid__cell mdc-layout-grid__cell--span-5" data-mdc-auto-init="MDCTextfield">
+    <input #productName type="text" class="mdc-textfield__input full-width" id="productName" />
+    <label for="productName" class="mdc-textfield__label mdc-textfield__label--float-above">Name: </label>
+  </div>
+  <div class="mdc-textfield mdc-textfield--upgraded mdc-layout-grid__cell mdc-layout-grid__cell--span-6" data-mdc-auto-init="MDCTextfield">
+    <input #productDesc type="text" class="mdc-textfield__input full-width" id="productDesc" />
+    <label for="productDesc" class="mdc-textfield__label mdc-textfield__label--float-above">Description: </label>
+  </div>
+  <button class="mdc-fab material-icons" data-mdc-auto-init="MDCRipple" (click)="add(productName.value, productDesc.value); productName.value=''; productDesc.value=''">
+    <span class="mdc-fab__icon">add</span>
+  </button>
+</div>
+<div class="mdc-layout-grid">
+  <div *ngFor="let product of products" class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-3 mdc-layout-grid__cell--span-6-tablet mdc-layout-grid__cell--span-12-phone">
+    <section class="mdc-card__primary">
+      <h1 class="mdc-card__title mdc-card__title--large">{{product.name}}</h1>
+      <h2 class="mdc-card__subtitle">{{product.description}}</h2>
+    </section>
+    <section class="mdc-card__actions mdc-theme--primary-bg">
+      <button class="mdc-button mdc-button--compact mdc-card__action mdc-theme--text-primary-on-primary" data-mdc-auto-init="MDCRipple" (click)="delete(product); $event.stopPropagation()">Delete</button>
+      <button class="mdc-button mdc-button--compact mdc-card__action mdc-theme--text-primary-on-primary" (click)="gotoDetail(product)">Edit</button>
+      <button class="mdc-button mdc-button--compact mdc-card__action mdc-theme--text-primary-on-primary">Releases</button>
+    </section>
+  </div>
+</div>
